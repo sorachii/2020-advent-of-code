@@ -15,9 +15,9 @@ def answer2():
     for i in range(0, len(lista)):
         if lista[i] == lista[i+1]: i+1
         for j in range(0, len(lista)):
-            if lista[i] == lista[i+1]: i+1
+            if lista[j] == lista[j+1]: j+1
             for k in range(0, len(lista)):
-                if lista[i] == lista[i+1]: i+1
+                if lista[k] == lista[k+1]: k+1
                 if lista[i] + lista[j] + lista[k] == 2020:
                     return(lista[i] * lista[j] * lista[k])
 
