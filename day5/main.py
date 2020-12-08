@@ -58,17 +58,29 @@ def ans1(ticket):
         if ticket[i] == "L":
             c[1] = math.floor((c[0]+c[1])/2)
         if c[0] == c[1]:
-            return r[0] * 8 + 5
+            return r[0] * 8 + c[0]
 
 
 def ans2(seats):
-    for i, seat in enumerate(seats):
-        if seats[i] + 8 != seats[i+1]:
-            return seats[i] + 8
+    for i in range(len(seats)):
+        if seats[i] + 1 < seats[i+1]:
+            return seats[i] + 1
 
 
 seats = []
 for ticket in tickets:
     seats.append(ans1(ticket))
 
+seats = sorted(set(seats))
+
+sseats = []
+for seat in seats:
+    sseats.append(seat)
+
+# ans1:
 print(max(seats))
+print(ans2(sseats))
+
+# print(len(seats))
+# print(len(set(seats)))
+# print(len(sseats))
