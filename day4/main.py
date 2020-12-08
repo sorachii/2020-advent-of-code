@@ -22,9 +22,12 @@ for line in lines:
             p1 += 1
             valid2 = True
 
-            if not in_range(passport["byr"], 1920, 2002): valid2 = False
-            if not in_range(passport["iyr"], 2010, 2020): valid2 = False
-            if not in_range(passport["eyr"], 2020, 2030): valid2 = False
+            if not in_range(passport["byr"], 1920, 2002):
+                valid2 = False
+            if not in_range(passport["iyr"], 2010, 2020):
+                valid2 = False
+            if not in_range(passport["eyr"], 2020, 2030):
+                valid2 = False
 
             ht = passport["hgt"]
             if ht.endswith("in"):
@@ -33,7 +36,8 @@ for line in lines:
             elif ht.endswith("cm"):
                 if not in_range(ht[:-2], 150, 193):
                     valid2 = False
-            else: valid2 = False
+            else:
+                valid2 = False
 
             hcl = passport["hcl"]
             if hcl[0] != "#" or any([c not in "0123456789abcdef" for c in hcl[1:]]):
