@@ -1,5 +1,4 @@
 import fileinput
-import re
 
 p1 = 0
 p2 = 0
