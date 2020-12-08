@@ -24,9 +24,9 @@ for line in lines:
 
             if not in_range(passport["byr"], 1920, 2002):
                 valid2 = False
-            if not in_range(passport["iyr"], 2010, 2020):
+            elif not in_range(passport["iyr"], 2010, 2020):
                 valid2 = False
-            if not in_range(passport["eyr"], 2020, 2030):
+            elif not in_range(passport["eyr"], 2020, 2030):
                 valid2 = False
 
             ht = passport["hgt"]
@@ -51,7 +51,7 @@ for line in lines:
             if len(pid) != 9 or any([c not in "0123456789" for c in pid]):
                 valid2 = False
 
-            if valid2:
+            elif valid2:
                 p2 += 1
         passport = {}
     else:
