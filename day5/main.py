@@ -1,42 +1,4 @@
 import math
-import cProfile
-# First seven always halfs the airplane's 128(0-127) rows
-# FBFBBFF - RLR
-# F = lower half
-# B = upper half
-# Start by considering the whole range, rows 0 through 127.
-"""
-F means to take the lower half, keeping rows 0 through 63.
-B means to take the upper half, keeping rows 32 through 63.
-F means to take the lower half, keeping rows 32 through 47.
-B means to take the upper half, keeping rows 40 through 47.
-B keeps rows 44 through 47.
-F keeps rows 44 through 45.
-The final F keeps the lower of the two, row 44.
-"""
-
-"""
-char:   low:    high:   keep:
-        0       127     l
-F       0       63      h
-B       32      63      l
-F       32      47      h
-B       40      47      h
-B       44      47      l
-F       44      45      l
-F       44      44
-"""
-
-# Last 3 characters halfs the airplane's 8 columns
-# L = lower half
-# R = upper half
-
-"""
-t = []
-with open(input) as f:
-    for i in f:
-        t.append(i)
-"""
 
 with open('input') as f:
     tickets = [line.strip() for line in f]
@@ -79,8 +41,5 @@ for seat in seats:
 
 # ans1:
 print(max(seats))
+# ans2:
 print(ans2(sseats))
-
-# print(len(seats))
-# print(len(set(seats)))
-# print(len(sseats))
