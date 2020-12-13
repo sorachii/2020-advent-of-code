@@ -1,4 +1,6 @@
 import re
+import functools
+from collections import deque
 
 sampleTxt = """light red bags contain 1 bright white bag, 2 muted yellow bags.
 dark orange bags contain 3 bright white bags, 4 muted yellow bags.
@@ -18,6 +20,7 @@ with open('input') as f:
     for line in f:
         lines.append(line.strip())
 
+
 sample = []
 for line in sampleTxt:
     sample.append(line.strip())
@@ -36,10 +39,25 @@ def parse(lines):
 def ans1(lines):
     bags = parse(lines)
 
+    # memoization makes executing code faster. New in version 3.9
+    @functools.cache
     def is_gold(item):
         return any(subitem == 'shiny gold' or is_gold(subitem)
                    for _, subitem in bags.get(item, ()))
     return sum(map(is_gold, bags))
 
 
+def ans2(lines):
+    bags = parse(lines)
+    queue = deque(bags.get('shiny gold', ()))
+    total = 0
+    while queue:
+        count, item = queue.popleft()
+        total += count
+        queue.extend((count * subcount, subitem)
+                     for subcount, subitem in bags.get(item, ()))
+    return total
+
+
 print(ans1(lines))
+print(ans2(lines))
