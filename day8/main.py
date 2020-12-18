@@ -1,10 +1,12 @@
 lines = []
-with open("input.sample") as f:
-    for line in f:
-        lines.append(line.split())
+with open("input") as f:
+    lines = [line.strip().split() for line in f.readlines()]
+
+instructions = [w[0] for w in lines]
+values = [int(w[1]) for w in lines]
 
 
-def ans1(operations):
+def ans1(insts, values):
     acc, i = 0, 0
     steps = set()
     while True:
@@ -13,28 +15,28 @@ def ans1(operations):
         elif i == len(lines):
             return(True, acc)
         steps.add(i)
-        if operations[i][0] == "nop":
+        inst = insts[i]
+        value = values[i]
+        if inst == "acc":
+            acc += int(value)
+        if inst == "jmp":
+            i += int(value)
+        else:
             i += 1
-        elif operations[i][0] == "acc":
-            acc += int(operations[i][1])
-            i += 1
-        elif operations[i][0] == "jmp":
-            i += int(operations[i][1])
 
 
-def ans2(operations):
-    to_change = (i for i, inst in enumerate(operations) if inst[0] in ('nop', 'jmp'))
-    acc, i = 0, 0
-    steps = set()
+def ans2(insts, values):
+    to_change = (i for i, x in enumerate(insts) if x in ('nop', 'jmp'))
     for i in to_change:
-        new_instructions = list(operations)
-        print(new_instructions[i][0])
-        new_instructions[i][0] = "jmp" if operations[i][0] == 'nop' else 'nop'
-        halts, acc = ans1(new_instructions)
+        new_instructions = list(insts)
+        new_instructions[i] = "jmp" if insts[i] == 'nop' else 'nop'
+        halts, acc = ans1(new_instructions, values)
         if halts:
+            _, acc = ans1(new_instructions, values)
             break
     return(acc)
 
 
-print(ans1(lines))
-print(ans2(lines))
+_, acc = ans1(instructions, values)
+print(acc)
+print(ans2(instructions, values))
