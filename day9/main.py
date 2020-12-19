@@ -1,3 +1,5 @@
+# Thinking about revisiting this and
+# solving it with itertools.combinations for practice
 lines = []
 with open("input") as f:
     nums = [int(line) for line in f.readlines()]
