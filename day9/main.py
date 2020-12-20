@@ -1,5 +1,6 @@
-# Thinking about revisiting this and
-# solving it with itertools.combinations for practice
+from itertools import combinations
+
+
 lines = []
 with open("input") as f:
     nums = [int(line) for line in f.readlines()]
@@ -10,7 +11,8 @@ def ans1(nums):
         if i < 25:                  # preamble
             continue
         prev = nums[i-25:i]
-        if not any(n == n1 + n2 for n1 in prev for n2 in prev):
+        combs = list(combinations(prev, 2))
+        if not any(n == sum(tup) for tup in combs):
             return(n)
 
 
