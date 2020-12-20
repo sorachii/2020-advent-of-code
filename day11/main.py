@@ -32,3 +32,10 @@ def equilibrium(state, adjacent, limit):
 # Part 1
 adjacent = {z: [w for d in dirs if (w :=z + d) in state] for z in state}
 print(equilibrium(state, adjacent, 4))
+
+# Part 2
+adjacent = {z: [u for d in dirs if
+                (u := next(w for i in count(1) if (w := z + i*d) not in floor))
+                in state]
+            for z in state}
+print(equilibrium(state, adjacent, 5))
