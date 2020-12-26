@@ -21,7 +21,7 @@ def solve(part_one):
                         s[j] = m
                 value = int(''.join(s), 2)
                 mem[loc] = value
-            else:
+            else:   # Part 2
                 s = list(bin(loc)[2:].zfill(len(mask)))
                 for j, m in enumerate(mask):
                     if m != '0':
@@ -33,4 +33,14 @@ def solve(part_one):
     return sum(mem.values())
 
 
+def expand(s):
+    xs = [i for i, x in enumerate(s) if x == 'X']
+    for rep in product(['0', '1'], repeat=len(xs)):
+        new_s = list(s)
+        for i, new_val in zip(xs, rep):
+            new_s[i] = new_val
+        yield new_s
+
+
 print(solve(True))
+print(solve(False))
