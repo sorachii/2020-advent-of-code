@@ -21,3 +21,4 @@ def ans1(iteration):
 
 
 print(ans1(2020))
+print(ans1(30000000))
