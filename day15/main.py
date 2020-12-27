@@ -5,7 +5,7 @@ nums = [12, 1, 16, 3, 11, 0]
 tnums = [0, 3, 6]
 
 
-def ans1(iteration):
+def ans(iteration):
     d = defaultdict(list)
     for i in count(1):
         if i <= len(nums):
@@ -20,5 +20,5 @@ def ans1(iteration):
         last_spoken = new
 
 
-print(ans1(2020))
-print(ans1(30000000))
+print(ans(2020))
+print(ans(30000000))
