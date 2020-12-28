@@ -15,4 +15,8 @@ def evaluate(code):
     return eval(compile(root, '<string>', 'eval'))
 
 
+# Part 1
 print(sum(evaluate(l.replace('+', '/')) for l in ls))
+
+# Part 2
+print(sum(evaluate(l.replace('+', '/').replace('*', '+')) for l in ls))
