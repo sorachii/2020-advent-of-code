@@ -43,3 +43,55 @@ for (i1, mat1), (i2, mat2) in product(mats.items(), repeat=2):
         G.add_edge(i1, i2)
 
 print(prod(k for k, v in G.degree() if v == 2))
+
+# Second part
+# Pick an arbitrary root image, DFS from that, and make sure to update
+# the values of mats as we rotate/flip
+root = next(iter(mats.keys()))  # 1489
+stack = [(root, (0, 0))]  # [1489]
+locs = {(0, 0): root}
+
+while stack:
+    i1, loc = stack.pop()
+    for i2 in G[i1]:
+        if i2 in locs.values():
+            continue
+        ds, mat = match(mats[i1], mats[i2])
+        mats[i2] = mat
+        new_loc = (loc[0] + ds[0], loc[1] + ds[1])
+        stack.append((i2, new_loc))
+        locs[new_loc] = i2
+
+# Start making the combined "big" picture. Since the root was arbitrary,
+# locs will probably contain negative coordinates, so we have to offset
+# accordingly
+n = int(np.sqrt(len(mats)))
+big = np.empty((n*8, n*8), dtype=np.bool)
+offset_x = min(x for x, _ in locs)
+offset_y = min(y for _, y in locs)
+
+for i in range(n):
+    for j in range(n):
+        tile = locs[i + offset_x, j + offset_y]
+        mat = mats[tile][1:-1, 1:-1]
+        big[i*8:(i+1)*8, j*8:(j+1)*8] = mat
+
+
+monster = """                  #
+#    ##    ##    ###
+ #  #  #  #  #  #   """.splitlines()
+mask = np.array([[c == '#' for c in l] for l in monster])
+
+
+def count_sea_monsters(big):
+    s = 0
+    for i in range(big.shape[0] - mask.shape[0]):
+        for j in range(big.shape[1] - mask.shape[1]):
+            masked = big[i:i+mask.shape[0], j:j+mask.shape[1]]
+            if (masked >= mask).all():
+                s += 1
+    return s
+
+
+count = max(map(count_sea_monsters, symmetries(big)))
+print(big.sum() - count * mask.sum())
